@@ -2,7 +2,7 @@ import React,{Component} from 'react'
 import { connect } from 'react-redux'
 import Header from '../../components/header/header.js'
 import Message from '../../components/message/message.js'
-import { logout } from '../../reducers/dataState.js'
+import { logout } from '../../actions'
 
 class MessageSmart extends Component{
 	constructor(){

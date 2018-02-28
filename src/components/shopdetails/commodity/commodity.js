@@ -19,11 +19,14 @@ class Commodity extends Component{
 			/*商家商品信息的存储*/
 			foodsSave:{}
 		}
+		this.isFirst = true;
+		this.currentScroll = 0;
+		this.currentMainScroll = 0;
+
+		this._scrollTogether=this._scrollTogether.bind(this);
+		this._getHandleClient=this._getHandleClient.bind(this);		
 	}
-	isFirst=true
-	currentScroll=0
-	currentMainScroll=0
-	componentWillReceiveProps(){
+	componentWillReceiveProps(){ // 当props发生变化时执行，初始化render时不执行，在这个回调函数里面，你可以根据属性的变化，通过调用this.setState()来更新你的组件状态，旧的属性还是可以通过this.props来获取,这里调用更新状态是安全的，并不会触发额外的render调用
 		/*初始化*/
 		if(!this.isFirst){return;}
 		this.isFirst=false;
@@ -37,7 +40,7 @@ class Commodity extends Component{
 			let allPirce=0;
 			/*同一类商品个数*/
 			let categoryObj={};
-			if(allSelected&&allSelected[id]){
+			if(allSelected&&allSelected[id]){ // 如果有选中的商品，更新state
 				allSelected[id][0].entities.forEach((value,index)=>{
 					allNum+=(value.quantity)*10000;
 					allPirce+=(value.view_discount_price)*10000 ;
@@ -71,25 +74,24 @@ class Commodity extends Component{
 						...categoryObj
 					}
 				})
-			}else{
+			}else{ // 没有则设置当前为旧的id
 				this.setState({
 					id:id
 				})
 			}
 		},50)
 	}
-	componentDidUpdate(){
-		this._computListHeight();
+	componentDidUpdate(){ // 组件更新结束之后执行，在初始化render时不执行
+		this._computListHeight(); // 组件更新后要重新计算当前所有dt的offsetTop
 	}
-	componentDidMount() {
+	componentDidMount() { // 在初始化render之后只执行一次，在这个方法内，可以访问任何组件，componentDidMount()方法中的子组件在父组件之前执行
 		/*初始化*/
 		/*为了顶部吸附*/
-		let headerHeight=document.querySelector('.shoplist_header').offsetHeight;
-		for(let i=0;i<document.querySelectorAll('.scrollBoxL').length;i++){
+		let headerHeight=document.querySelector('.shoplist_header').offsetHeight; // 获得头部高度
+		for(let i=0;i<document.querySelectorAll('.scrollBoxL').length;i++){ // 所有tab都设好高度
 			document.querySelectorAll('.scrollBoxL')[i].style.height=document.body.clientHeight-this.body.offsetTop+headerHeight+'px';
 		}
-		this._scrollTogether=this._scrollTogether.bind(this);
-		this._getHandleClient=this._getHandleClient.bind(this);
+
 		this.main.addEventListener('scroll',this._scrollTogether);
 		this.main.addEventListener('touchstart',this._getHandleClient);
 	}
@@ -104,8 +106,8 @@ class Commodity extends Component{
 		this._run(id);
 	}
 	_getHandleClient(){
-		this.currentScroll=this.main.scrollTop;
-		this.currentMainScroll=document.querySelector('.scrollMain').scrollTop;
+		this.currentScroll=this.main.scrollTop; // .commodity_main的scrollTop
+		this.currentMainScroll=document.querySelector('.scrollMain').scrollTop; // .scrollMain总的scrollTop
 	}
 	_scrollTogether(){
 		let headerHeight=document.querySelector('.shoplist_header').offsetHeight;

@@ -8,7 +8,7 @@ import ListItem from './listItem'
 import ReturnTop from '../../components/index/returnTop/returnTop.js'
 import ShoppingCart from '../../components/index/shoppingCart/ShoppingCart.js'
 import { connect } from 'react-redux'
-import { login } from '../../reducers/dataState.js'
+import { login } from '../../actions'
 
 class Index extends Component{
 	/*保存登录状态*/

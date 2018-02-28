@@ -1,6 +1,6 @@
 import React,{Component} from 'react'
 import { connect } from 'react-redux'
-import { login } from '../../reducers/dataState.js'
+import { login } from '../../actions'
 import './login.css'
 
 class Login extends Component{

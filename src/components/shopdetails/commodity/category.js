@@ -6,6 +6,7 @@ class Category extends Component{
 		this.state={
 			display:false,
 		}
+		this.handleClickRun = this.handleClickRun.bind(this);
 	}
 	/*优化*/
 	shouldComponentUpdate(nextProps,nextStates){
@@ -36,7 +37,7 @@ class Category extends Component{
 			num=this.props.nums.num
 		}
 		return(
-			<li className={`${this.props.current===this.props.index?'active':''}`} onClick={this.handleClickRun.bind(this,this.props.index)}>
+			<li className={`${this.props.current===this.props.index?'active':''}`} onClick={this.handleClickRun}>
 				{( (this.props.type===1)&&num!==0)?
 				<span className="category_tip">
 				{num}
